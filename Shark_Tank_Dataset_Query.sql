@@ -12,7 +12,9 @@ select count(distinct brand) from project..data
 --pitches converted
 
 select cast(sum(a.converted_not_converted) as float) /cast(count(*) as float) from (
-select amountinvestedlakhs , case when amountinvestedlakhs>0 then 1 else 0 end as converted_not_converted from project..data) a
+select amountinvestedlakhs 
+case 
+when amountinvestedlakhs>0 then 1 else 0 end as converted_not_converted from project..data) a
 
 -- total male
 
