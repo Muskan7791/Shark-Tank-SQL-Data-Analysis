@@ -108,34 +108,10 @@ SELECT 'Ashneer' as keyy,SUM(C.ASHNEERAMOUNTINVESTED),AVG(C.ASHNEEREQUITYTAKENP)
 FROM (SELECT * FROM PROJECT..DATA  WHERE ASHNEEREQUITYTAKENP!=0 AND ASHNEEREQUITYTAKENP IS NOT NULL) C
 
 
-select m.keyy,m.total_deals_present,m.total_deals,n.total_amount_invested,n.avg_equity_taken from
 
-(select a.keyy,a.total_deals_present,b.total_deals from(
-
-select 'Ashneer' as keyy,count(ashneeramountinvested) total_deals_present from project..data where ashneeramountinvested is not null) a
-
-inner join (
-select 'Ashneer' as keyy,count(ashneeramountinvested) total_deals from project..data 
-where ashneeramountinvested is not null AND ashneeramountinvested!=0) b 
-
-on a.keyy=b.keyy) m
-
-inner join 
-
-(SELECT 'Ashneer' as keyy,SUM(C.ASHNEERAMOUNTINVESTED) total_amount_invested,
-AVG(C.ASHNEEREQUITYTAKENP) avg_equity_taken
-FROM (SELECT * FROM PROJECT..DATA  WHERE ASHNEEREQUITYTAKENP!=0 AND ASHNEEREQUITYTAKENP IS NOT NULL) C) n
-
-on m.keyy=n.keyy
 
 -- which is the startup in which the highest amount has been invested in each domain/sector
 
 
-
-
-select c.* from 
-(select brand,sector,amountinvestedlakhs,rank() over(partition by sector order by amountinvestedlakhs desc) rnk 
-
-from project..data) c
-
-where c.rnk=1
+select  max(amountinvestedlakhs) as highest_amount, brand from project..data
+group by sector
