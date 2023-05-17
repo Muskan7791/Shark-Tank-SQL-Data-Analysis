@@ -34,8 +34,9 @@ select sum(amountinvestedlakhs) from project..data
 
 -- avg equity taken
 
-select avg(a.equitytakenp) from
-(select * from project..data where equitytakenp>0) a
+select avg(equitytaken)
+from project..data 
+where equitytaken>0) 
 
 --highest deal taken
 
