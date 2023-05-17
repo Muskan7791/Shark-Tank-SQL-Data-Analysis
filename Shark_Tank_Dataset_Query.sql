@@ -46,20 +46,18 @@ select max(amountinvestedlakhs) from project..data
 
 select max(equitytakenp) from project..data
 
--- startups having at least women
+-- startups having at least one women
 
-select sum(a.female_count) startups having at least women from (
-select female,case when female>0 then 1 else 0 end as female_count from project..data) a
+select count(brand) from project.. data
+where female>0
 
--- pitches converted having atleast ne women
+-- pitches converted having atleast 0ne women
 
 select * from project..data
 
 
-select sum(b.female_count) from(
-
-select case when a.female>0 then 1 else 0 end as female_count ,a.*from (
-(select * from project..data where deal!='No Deal')) a)b
+select count(brand) from project.. data
+where amountinvestedlakhs>0 and female>0
 
 -- avg team members
 
@@ -67,25 +65,34 @@ select avg(teammembers) from project..data
 
 -- amount invested per deal
 
-select avg(a.amountinvestedlakhs) amount_invested_per_deal from
-(select * from project..data where deal!='No Deal') a
+select avg(amountinvestedlakhs) as amount_invested_per_deal from project..data
+ where deal!='No Deal'
 
 -- avg age group of contestants
 
-select avgage,count(avgage) cnt from project..data group by avgage order by cnt desc
+select count(avgage) as cnt_avg from project..data
+group by avgage
+order by cnt_avg desc
 
 -- location group of contestants
 
-select location,count(location) cnt from project..data group by location order by cnt desc
+select location,count(location) as cnt from project..data
+group by location 
+order by cnt desc
 
 -- sector group of contestants
 
-select sector,count(sector) cnt from project..data group by sector order by cnt desc
+select sector,count(sector) as cnt from project..data 
+group by sector 
+order by cnt desc
 
 
 --partner deals
 
-select partners,count(partners) cnt from project..data  where partners!='-' group by partners order by cnt desc
+select partners,count(partners) as cnt from project..data  
+where partners!='-' 
+group by partners 
+order by cnt desc
 
 -- making the matrix
 
